@@ -74,7 +74,7 @@ class Forminator_Rentier_PDF {
                     padding-top: 42mm;
                     padding-bottom: 19mm;
                     top: 0;
-                    font-size: 14pt;
+                    font-size: 15pt;
                     text-align: center;
                 }
                 #area { 
@@ -82,21 +82,21 @@ class Forminator_Rentier_PDF {
                     padding-bottom: 21mm;
                     left: 0;
                     top: 0;
-                    font-size: 14pt;
+                    font-size: 15pt;
                 }
                 #rooms { 
                     padding-top: 22mm;
                     padding-bottom: 20mm;
                     left: 0;
                     top: 0;
-                    font-size: 14pt;
+                    font-size: 15pt;
                 }
                 #standard { 
-                    padding-top: 22mm;
+                    padding-top: 20mm;
                     padding-bottom: 20mm;
                     left: 0;
                     top: 0;
-                    font-size: 14pt;
+                    font-size: 15pt;
                 }
                 #price {
                     padding-left: 20mm;
@@ -124,7 +124,8 @@ class Forminator_Rentier_PDF {
                     ' . $this->map_standard($data['standard']) . '
                 </div>
                 <div id="price" class="data-row">
-                    Szacunkowa kalkulacja cenowa: ' . $data['estimated_price'] . ' PLN
+                    Szacunkowa kalkulacja cenowa: ' . 
+                    ($data['estimated_price'] === '0,00' ? 'Brak danych' : $data['estimated_price'] . ' PLN') . '
                 </div>
             </div>';
             

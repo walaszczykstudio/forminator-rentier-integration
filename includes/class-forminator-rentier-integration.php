@@ -150,7 +150,7 @@ class Forminator_Rentier_Integration {
             // Mapowanie standardu wykończenia
             $standard_mapping = array(
                 'one' => 3, // Do Remontu
-                'two' => 2, // Do Odświeżenia
+                'two' => 3, // Do Odświeżenia
                 'Stan-Surowy-Deweloperski' => 3, // Stan Surowy/Deweloperski
                 'Gotowe-do-Wprowadzenia' => 2, // Gotowe do Wprowadzenia
                 'Wysoki-Standard-Apartament' => 1 // Wysoki Standard/Apartament
@@ -231,16 +231,11 @@ class Forminator_Rentier_Integration {
 
                 // Przygotuj treść maila
                 $message = "Szanowni Państwo,\n\n";
-                $message .= "Dziękujemy za skorzystanie z usług HomePrice. W załączeniu przesyłamy darmową szacunkową kalkulację dla Państwa nieruchomości.\n\n";
-                $message .= "Nasza wycena została przygotowana w oparciu o zaawansowane algorytmy analizujące aktualne ceny na rynku nieruchomości w Państwa lokalizacji. ";
-                $message .= "Uwzględniamy przy tym takie czynniki jak metraż, standard wykończenia, liczbę pokoi oraz dokładną lokalizację.\n\n";
-                $message .= "Szczegółową wycenę znajdą Państwo w załączonym dokumencie PDF.\n\n";
+                $message .= "Dziękujemy za skorzystanie z usług HomePrice. W załączeniu przesyłamy darmową szacunkową kalkulację dla Państwa nieruchomości.\n";
                 $message .= "W razie jakichkolwiek pytań lub potrzeby dokładniejszej wyceny, zachęcamy do kontaktu z naszymi ekspertami.\n\n";
                 $message .= "Z poważaniem,\n";
-                $message .= "Zespół HomePrice\n";
-                $message .= "www.homeprice.pl\n\n";
-                $message .= "---\n";
-                $message .= "Ta wiadomość została wygenerowana automatycznie, prosimy na nią nie odpowiadać.";
+                $message .= "Zespół HomePrice.pl\n";
+                $message .= "www.homeprice.pl";
 
                 error_log('Rentier: Przygotowana treść maila: ' . $message);
 
