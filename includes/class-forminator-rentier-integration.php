@@ -216,12 +216,17 @@ class Forminator_Rentier_Integration {
                 // Wyliczenie średniej ceny
                 $avm_price_raw = isset($api_response['avm_price_raw']) ? $api_response['avm_price_raw'] : 0;
                 $avm_price = isset($api_response['avm_price']) ? $api_response['avm_price'] : 0;
-                $avg_price = isset($api_response['avg_price']) ? $api_response['avg_price'] : 0;
                 $average_price = ($avm_price_raw + $avm_price) / 2;
+                
+                // Zastosuj modyfikator ceny
+                $price_modifier = get_option('fri_price_modifier', '0');
+                if ($price_modifier !== '0' && $average_price > 0) {
+                    $modifier = 1 + (intval($price_modifier) / 100);
+                    $average_price = $average_price * $modifier;
+                }
                 
                 error_log('Rentier: AVM PRICE RAW ' . $avm_price_raw);
                 error_log('Rentier: AVM PRICE ' . $avm_price);
-                error_log('Rentier: AVG PRICE ' . $avg_price);
 
                 error_log('Rentier: Wyliczona średnia cena: ' . $average_price);
 

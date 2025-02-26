@@ -55,10 +55,20 @@ class Forminator_Rentier_Settings {
             'rentier_api_section'
         );
 
+        // Dodaj nowe pole dla modyfikacji ceny
+        add_settings_field(
+            'fri_price_modifier',
+            'Modyfikator ceny (%)',
+            array($this, 'price_modifier_field_html'),
+            'rentier-settings',
+            'rentier_api_section'
+        );
+
         // Rejestracja ustawień
         register_setting('rentier-settings', 'fri_api_token');
         register_setting('rentier-settings', 'fri_form_id');
         register_setting('rentier-settings', 'fri_bcc_email');
+        register_setting('rentier-settings', 'fri_price_modifier', array($this, 'validate_price_modifier'));
     }
 
     public function section_description() {
@@ -81,6 +91,29 @@ class Forminator_Rentier_Settings {
         $value = get_option('fri_bcc_email');
         echo '<input type="email" id="fri_bcc_email" name="fri_bcc_email" value="' . esc_attr($value) . '" class="regular-text">';
         echo '<p class="description">Na ten adres będą wysyłane kopie wszystkich wycen. Zostaw puste, aby wyłączyć.</p>';
+    }
+
+    public function price_modifier_field_html() {
+        $value = get_option('fri_price_modifier', '0');
+        echo '<input type="text" id="fri_price_modifier" name="fri_price_modifier" value="' . esc_attr($value) . '" class="regular-text">';
+        echo '<p class="description">Wprowadź wartość procentową (np. +10 lub -10). Zostaw 0 aby nie modyfikować ceny.</p>';
+    }
+
+    public function validate_price_modifier($input) {
+        // Usuń wszystkie spacje
+        $input = str_replace(' ', '', $input);
+        
+        // Sprawdź czy format jest poprawny (liczba z opcjonalnym znakiem + lub -)
+        if (!preg_match('/^[+-]?\d+$/', $input)) {
+            add_settings_error(
+                'fri_price_modifier',
+                'fri_price_modifier_error',
+                'Modyfikator ceny musi być liczbą całkowitą z opcjonalnym znakiem + lub -'
+            );
+            return '0';
+        }
+        
+        return $input;
     }
 
     public function render_settings_page() {
