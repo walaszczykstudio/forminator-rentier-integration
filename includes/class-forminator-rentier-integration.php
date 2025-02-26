@@ -149,9 +149,11 @@ class Forminator_Rentier_Integration {
 
             // Mapowanie standardu wykończenia
             $standard_mapping = array(
-                'Wysoki' => 1,
-                'Dobry' => 2,
-                'Do remontu' => 3
+                'one' => 3, // Do Remontu
+                'two' => 2, // Do Odświeżenia
+                'Stan-Surowy-Deweloperski' => 3, // Stan Surowy/Deweloperski
+                'Gotowe-do-Wprowadzenia' => 2, // Gotowe do Wprowadzenia
+                'Wysoki-Standard-Apartament' => 1 // Wysoki Standard/Apartament
             );
 
             // Mapowanie typu budynku
@@ -164,6 +166,12 @@ class Forminator_Rentier_Integration {
                 'Wolnostojący' => 11
             );
 
+            // Określenie typu rynku na podstawie standardu
+            $market_type = 2; // Domyślnie rynek wtórny
+            if ($form_data['select-1'] === 'Stan-Surowy-Deweloperski') {
+                $market_type = 1; // Rynek pierwotny dla stanu deweloperskiego
+            }
+
             // Mapowanie pól formularza do formatu API
             $mapped_data = array(
                 // Obowiązkowe pola
@@ -175,7 +183,7 @@ class Forminator_Rentier_Integration {
                     )
                 ),
                 'area' => floatval($form_data['number-4']), // Metraż
-                'market_type' => 2, // Zakładamy rynek wtórny jako domyślny
+                'market_type' => $market_type,
 
                 // Opcjonalne pola
                 'realestate_type' => 6, // Mieszkanie
@@ -208,8 +216,13 @@ class Forminator_Rentier_Integration {
                 // Wyliczenie średniej ceny
                 $avm_price_raw = isset($api_response['avm_price_raw']) ? $api_response['avm_price_raw'] : 0;
                 $avm_price = isset($api_response['avm_price']) ? $api_response['avm_price'] : 0;
+                $avg_price = isset($api_response['avg_price']) ? $api_response['avg_price'] : 0;
                 $average_price = ($avm_price_raw + $avm_price) / 2;
                 
+                error_log('Rentier: AVM PRICE RAW ' . $avm_price_raw);
+                error_log('Rentier: AVM PRICE ' . $avm_price);
+                error_log('Rentier: AVG PRICE ' . $avg_price);
+
                 error_log('Rentier: Wyliczona średnia cena: ' . $average_price);
 
                 // Pobierz email z oryginalnego żądania POST
