@@ -125,7 +125,7 @@ class Forminator_Rentier_PDF {
                 </div>
                 <div id="price" class="data-row">
                     Szacunkowa kalkulacja cenowa: ' . 
-                    ($data['estimated_price'] === '0,00' ? 'Brak danych' : $data['estimated_price'] . ' PLN') . '
+                    ($data['estimated_price'] === '0' ? 'Brak danych' : $data['estimated_price'] . ' PLN') . '
                 </div>
             </div>';
             

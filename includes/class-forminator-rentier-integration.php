@@ -248,7 +248,7 @@ class Forminator_Rentier_Integration {
                     'area' => $form_data['number-4'],
                     'rooms' => $form_data['number-2'],
                     'standard' => $form_data['select-1'],
-                    'estimated_price' => number_format($average_price, 2, ',', ' ')
+                    'estimated_price' => number_format(round($average_price), 0, ',', ' ')
                 );
 
                 error_log('Rentier: Próba generowania PDF z danymi: ' . print_r($pdf_data, true));
